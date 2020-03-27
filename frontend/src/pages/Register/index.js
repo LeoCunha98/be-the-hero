@@ -4,7 +4,7 @@ import { FiArrowLeft } from 'react-icons/fi';
 
 import logoImg from '../../assets/logo.svg';
 
-import { BackLink, Button } from '../../styles/global-style';
+import { BackLink, StyledButton } from '../../styles/globalStyle';
 import { Container, Content, InputGroup } from './style';
 
 export default function Register() {
@@ -36,7 +36,7 @@ export default function Register() {
             <input placeholder='UF' style={{ width: 80 }} />
           </InputGroup>
 
-          <Button type='submit'>Cadastrar</Button>
+          <StyledButton type='submit'>Cadastrar</StyledButton>
         </form>
       </Content>
     </Container>

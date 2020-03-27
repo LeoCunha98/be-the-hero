@@ -6,7 +6,7 @@ import heroesImg from '../../assets/heroes.png';
 import logoImg from '../../assets/logo.svg';
 
 import { Container } from './style';
-import { Button, BackLink } from '../../styles/global-style';
+import { StyledButton, BackLink } from '../../styles/globalStyle';
 
 export default function Logon() {
   return (
@@ -16,7 +16,7 @@ export default function Logon() {
         <form>
           <h1>Faça seu logon</h1>
           <input placeholder='Sua ID' />
-          <Button>Entrar</Button>
+          <StyledButton>Entrar</StyledButton>
 
           <BackLink>
             <Link to='/register'>

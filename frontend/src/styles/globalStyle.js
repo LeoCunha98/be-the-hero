@@ -36,7 +36,7 @@ form input {
   padding: 0 24px;
 }`;
 
-export const Button = styled.button`
+export const StyledButton = styled.button`
   width: 100%;
   height: 60px;
   background-color: #e02041;
