@@ -1,10 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { FiLogIn } from 'react-icons/fi';
 
 import heroesImg from '../../assets/heroes.png';
 import logoImg from '../../assets/logo.svg';
+
 import { Container } from './style';
-import { Button } from '../../styles/global-style';
+import { Button, BackLink } from '../../styles/global-style';
 
 export default function Logon() {
   return (
@@ -16,10 +18,12 @@ export default function Logon() {
           <input placeholder='Sua ID' />
           <Button>Entrar</Button>
 
-          <a href='/register'>
-            <FiLogIn size={16} color='#E02041' />
-            Não tenho cadastro
-          </a>
+          <BackLink>
+            <Link to='/register'>
+              <FiLogIn size={16} color='#E02041' />
+              Não tenho cadastro
+            </Link>
+          </BackLink>
         </form>
       </section>
 
