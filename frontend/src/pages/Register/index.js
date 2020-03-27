@@ -5,7 +5,7 @@ import { FiArrowLeft } from 'react-icons/fi';
 import logoImg from '../../assets/logo.svg';
 
 import { BackLink, StyledButton } from '../../styles/globalStyle';
-import { Container, Content, InputGroup } from './style';
+import { Container, Content, InputGroup } from './styles';
 
 export default function Register() {
   return (

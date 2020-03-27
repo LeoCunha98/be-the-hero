@@ -5,7 +5,7 @@ import { FiLogIn } from 'react-icons/fi';
 import heroesImg from '../../assets/heroes.png';
 import logoImg from '../../assets/logo.svg';
 
-import { Container } from './style';
+import { Container } from './styles';
 import { StyledButton, BackLink } from '../../styles/globalStyle';
 
 export default function Logon() {

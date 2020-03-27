@@ -2,7 +2,7 @@ import React from 'react';
 import { FiPower, FiTrash2 } from 'react-icons/fi';
 
 import logoImg from '../../assets/logo.svg';
-import { Container, PowerButton, StyledLink } from './style';
+import { Container, PowerButton, StyledLink } from './styles';
 import { StyledButton } from '../../styles/globalStyle';
 
 export default function Profile() {
