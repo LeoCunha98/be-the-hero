@@ -1,13 +1,45 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { FiArrowLeft } from 'react-icons/fi';
+import { useHistory } from 'react-router-dom';
 
-import logoImg from '../../assets/logo.svg';
+import api from '../../services/api';
 
 import { BackLink, StyledButton } from './../../styles/globalStyle';
 import { Container, Content } from './styles';
-import { FiArrowLeft } from 'react-icons/fi';
+
+import logoImg from '../../assets/logo.svg';
 
 export default function NewIncident() {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [value, setValue] = useState('');
+
+  const history = useHistory();
+
+  const ongId = localStorage.getItem('ongId');
+
+  async function handleNewIncident(e) {
+    e.preventDefault();
+
+    const data = {
+      title,
+      description,
+      value
+    };
+
+    try {
+      await api.post('incidents', data, {
+        headers: {
+          Authorization: ongId
+        }
+      });
+
+      history.push('/profile');
+    } catch (err) {
+      alert('Erro ao cadastrar caso, tente novamente.');
+    }
+  }
+
   return (
     <Container>
       <Content>
@@ -19,18 +51,28 @@ export default function NewIncident() {
             isso.
           </p>
 
-          <BackLink>
-            <Link to='/profile'>
-              <FiArrowLeft size={16} color='#E02041' />
-              Voltar para home
-            </Link>
+          <BackLink to='/profile'>
+            <FiArrowLeft size={16} color='#E02041' />
+            Voltar para home
           </BackLink>
         </section>
 
-        <form>
-          <input placeholder='Título do caso' />
-          <textarea placeholder='Descrição' />
-          <input placeholder='Valor em reais' />
+        <form onSubmit={handleNewIncident}>
+          <input
+            placeholder='Título do caso'
+            value={title}
+            onChange={e => setTitle(e.target.value)}
+          />
+          <textarea
+            placeholder='Descrição'
+            value={description}
+            onChange={e => setDescription(e.target.value)}
+          />
+          <input
+            placeholder='Valor em reais'
+            value={value}
+            onChange={e => setValue(e.target.value)}
+          />
 
           <StyledButton type='submit'>Cadastrar</StyledButton>
         </form>

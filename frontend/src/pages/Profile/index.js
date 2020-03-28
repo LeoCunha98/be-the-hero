@@ -1,83 +1,97 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiPower, FiTrash2 } from 'react-icons/fi';
+import { Link, useHistory } from 'react-router-dom';
 
-import logoImg from '../../assets/logo.svg';
-import { Container, PowerButton, StyledLink } from './styles';
+import api from '../../services/api';
+
+import { Container, LogoutButton, StyledLink } from './styles';
 import { StyledButton } from '../../styles/globalStyle';
 
+import logoImg from '../../assets/logo.svg';
+
 export default function Profile() {
+  const [incidents, setIncidents] = useState([]);
+
+  const history = useHistory();
+
+  const ongName = localStorage.getItem('ongName');
+  const ongId = localStorage.getItem('ongId');
+
+  useEffect(() => {
+    api
+      .get('profile', {
+        headers: {
+          Authorization: ongId
+        }
+      })
+      .then(response => {
+        setIncidents(response.data);
+      });
+  }, [ongId]);
+
+  async function handleDeleteIncident(id) {
+    try {
+      await api.delete(`incidents/${id}`, {
+        headers: {
+          Authorization: ongId
+        }
+      });
+
+      setIncidents(incidents.filter(incident => incident.id !== id));
+    } catch (err) {
+      alert('Erro ao deletar caso, tente novamente.');
+    }
+  }
+
+  function handleLogout() {
+    localStorage.clear();
+
+    history.push('/');
+  }
+
   return (
     <Container>
       <header>
-        <img src={logoImg} alt='Be the Hero' />
-        <span>Bem vinda, APAD</span>
+        >
+        <Link to='/'>
+          <img src={logoImg} alt='Be the Hero' />
+        </Link>
+        <span>Bem vinda, {ongName}</span>
         <StyledButton as={StyledLink} to='/incidents/new'>
           Cadastrar novo caso
         </StyledButton>
-        <PowerButton>
+        <LogoutButton onClick={handleLogout}>
           <FiPower size={18} color='#E02041' />
-        </PowerButton>
+        </LogoutButton>
       </header>
 
       <h1>Casos cadastrados</h1>
 
       <ul>
-        <li>
-          <strong>CASO</strong>
-          <p>Caso Teste</p>
+        {incidents.map(incident => (
+          <li key={incident.id}>
+            <strong>CASO</strong>
+            <p>{incident.title}</p>
 
-          <strong>DESCRIÇÃO</strong>
-          <p>Descrição Teste</p>
+            <strong>DESCRIÇÃO</strong>
+            <p>{incident.description}</p>
 
-          <strong>Valor</strong>
-          <p>R$ 120</p>
+            <strong>Valor</strong>
+            <p>
+              {Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+              }).format(incident.value)}
+            </p>
 
-          <button type='submit'>
-            <FiTrash2 size={20} color='a8a8b3' />
-          </button>
-        </li>
-        <li>
-          <strong>CASO</strong>
-          <p>Caso Teste</p>
-
-          <strong>DESCRIÇÃO</strong>
-          <p>Descrição Teste</p>
-
-          <strong>Valor</strong>
-          <p>R$ 120</p>
-
-          <button type='submit'>
-            <FiTrash2 size={20} color='a8a8b3' />
-          </button>
-        </li>
-        <li>
-          <strong>CASO</strong>
-          <p>Caso Teste</p>
-
-          <strong>DESCRIÇÃO</strong>
-          <p>Descrição Teste</p>
-
-          <strong>Valor</strong>
-          <p>R$ 120</p>
-
-          <button type='submit'>
-            <FiTrash2 size={20} color='a8a8b3' />
-          </button>
-        </li>
-        <li>
-          <strong>CASO</strong>
-          <p>Caso Teste</p>
-
-          <strong>DESCRIÇÃO</strong>
-          <p>Descrição Teste</p>
-
-          <strong>Valor</strong>
-          <p>R$ 120</p>
-
-          <button type='submit'>
-            <FiTrash2 size={20} color='a8a8b3' />
-          </button>
-        </li>
+            <button
+              onClick={() => handleDeleteIncident(incident.id)}
+              type='button'
+            >
+              <FiTrash2 size={20} color='a8a8b3' />
+            </button>
+          </li>
+        ))}
       </ul>
     </Container>
   );

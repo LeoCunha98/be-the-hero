@@ -74,7 +74,7 @@ export const StyledLink = styled(Link)`
   margin-top: 0;
 `;
 
-export const PowerButton = styled.button`
+export const LogoutButton = styled.button`
   height: 60px;
   width: 60px;
   border-radius: 4px;

@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export default createGlobalStyle`
 
@@ -71,7 +72,7 @@ export const StyledButton = styled.button`
   }
 `;
 
-export const BackLink = styled.a`
+export const BackLink = styled(Link)`
   display: flex;
   align-items: center;
   margin-top: 40px;
